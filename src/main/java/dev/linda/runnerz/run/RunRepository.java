@@ -25,11 +25,24 @@ public class RunRepository {
         return runs.stream().filter(r -> r.id() == id).findFirst();
     }
 
-
+    // create new run
     void addRun(@RequestBody Run runEntry) {
         runs.add(runEntry);
     }
 
+    // update/edit an existing run by it's id
+    void editRun(Run run, Integer id) {
+        Optional<Run> existingRun = findById(id);
+        // this isPresent method is from Optional
+        if (existingRun.isPresent()) {
+            runs.set(runs.indexOf(existingRun.get()), run);
+        }
+    }
+
+    // delete run
+    void deleteRun(Integer id) {
+            runs.removeIf(run -> run.id() == id);
+    }
 
     // this will do some initialization in this Class
     // this will add 2 runs at initialization of this Class

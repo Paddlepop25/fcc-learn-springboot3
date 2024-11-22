@@ -18,6 +18,11 @@ public class RunController {
         this.runRepository = runRepositoryToUse;
     }
 
+    @RequestMapping("/hello")
+    public String home() {
+        return "Hello, Runnerzs!!!!!";
+    }
+
     @GetMapping("")
     List<Run> findAll() {
         return runRepository.findAll();
@@ -40,15 +45,25 @@ public class RunController {
 
     // this is POST request
     @PostMapping("")
-    // this will return status 201 so u know create works
+    // this will return status 201 Created so u know create works
     @ResponseStatus(HttpStatus.CREATED)
     void addRun(@RequestBody Run run) {
         runRepository.addRun(run);
     }
 
-    @RequestMapping("/hello")
-    public String home() {
-        return "Hello, Runnerzs!!!!!";
+    // this is PUT request
+    @PutMapping("/{id}")
+    // returns status '204 No Content' so we know there's no content, update works
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void editRun(@RequestBody Run run, @PathVariable Integer id) {
+        runRepository.editRun(run, id);
     }
 
+    // this is DELETE request
+    @DeleteMapping("/{id}")
+    // returns status '204 No Content' so we know there's no content, update works
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteRun(@PathVariable Integer id) {
+        runRepository.deleteRun(id);
+    }
 }
