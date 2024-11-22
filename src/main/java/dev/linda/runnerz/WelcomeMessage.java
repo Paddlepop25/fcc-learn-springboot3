@@ -1,4 +1,4 @@
-package Messages;
+package dev.linda.runnerz;
 
 import org.springframework.stereotype.Component;
 
