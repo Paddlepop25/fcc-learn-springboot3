@@ -34,9 +34,12 @@ public class RunController {
 
         // Optional is have or dun have (null)
         Optional<Run> run = runRepository.findById(id);
-        if (run.isEmpty()) {
         // if don't have, will return bad request 400
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (run.isEmpty()) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+            // this is custom made, see RunNotFoundException.java
+            throw new RunNotFoundException();
         }
 
         // if have, will return data and response 200
