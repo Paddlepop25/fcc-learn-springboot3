@@ -1,5 +1,6 @@
 package dev.linda.runnerz.run;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -50,7 +51,9 @@ public class RunController {
     @PostMapping("")
     // this will return status 201 Created so u know create works
     @ResponseStatus(HttpStatus.CREATED)
-    void addRun(@RequestBody Run run) {
+    // @Valid is making sure data is validated. see Run.java for validation
+    // example if empty title, will return response '400 Bad Request.. empty string'
+    void addRun(@Valid @RequestBody Run run) {
         runRepository.addRun(run);
     }
 
