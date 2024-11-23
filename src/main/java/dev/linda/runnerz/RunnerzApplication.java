@@ -2,6 +2,7 @@ package dev.linda.runnerz;
 
 import dev.linda.runnerz.run.Location;
 import dev.linda.runnerz.run.Run;
+import dev.linda.runnerz.run.RunRepositoryH2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -34,10 +35,13 @@ public class RunnerzApplication {
     // a bean is an instance of a class with some metadata attached to it
     @Bean
     // CommandLineRunner runs after the application has started
-    CommandLineRunner commandLineRunner() {
+    CommandLineRunner commandLineRunner(RunRepositoryH2 runRepositoryH2) {
         return args -> {
             Run run = new Run(1, "My 1st run", LocalDateTime.now(), LocalDateTime.now().plus(3, ChronoUnit.HOURS), 15, Location.OUTDOOR);
             log.info(">>> Run record : " + run);
+
+            // this inserts the above run to H2 database after application starts
+            runRepositoryH2.create(run);
         };
     }
 
