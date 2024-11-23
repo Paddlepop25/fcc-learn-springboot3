@@ -32,17 +32,18 @@ public class RunnerzApplication {
         log.info(">>> " + "Application started successfully <<<");
     }
 
+    // this works but we'll bootstrap some data that has array of 10 runs in RunJsonDataLoader.java
     // a bean is an instance of a class with some metadata attached to it
-    @Bean
-    // CommandLineRunner runs after the application has started
-    CommandLineRunner commandLineRunner(RunRepositoryH2 runRepositoryH2) {
-        return args -> {
-            Run run = new Run(1, "My 1st run", LocalDateTime.now(), LocalDateTime.now().plus(3, ChronoUnit.HOURS), 15, Location.OUTDOOR);
-            log.info(">>> Run record : " + run);
-
-            // this inserts the above run to H2 database after application starts
-            runRepositoryH2.create(run);
-        };
-    }
+//    @Bean
+//    // CommandLineRunner runs after the application has started
+//    CommandLineRunner commandLineRunner(RunRepositoryH2 runRepositoryH2) {
+//        return args -> {
+//            Run run = new Run(1, "My 1st run", LocalDateTime.now(), LocalDateTime.now().plus(3, ChronoUnit.HOURS), 15, Location.OUTDOOR);
+//            log.info(">>> Run record : " + run);
+//
+//            // this inserts the above run to H2 database after application starts
+//            runRepositoryH2.create(run);
+//        };
+//    }
 
 }
