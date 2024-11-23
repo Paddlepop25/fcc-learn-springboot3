@@ -13,10 +13,18 @@ import java.util.Optional;
 @RequestMapping("/api/runs") // set the 'parent' endpoint
 public class RunController {
 
-    private final RunRepository runRepository;
+//    In memory database
+//    private final RunRepository runRepository;
 
-    public RunController(RunRepository runRepositoryToUse) {
-        this.runRepository = runRepositoryToUse;
+//    public RunController(RunRepository runRepositoryToUse) {
+//        this.runRepository = runRepositoryToUse;
+//    }
+
+    // using H2 database (from dependecies in pom.xml)
+    private final RunRepositoryH2 runRepository;
+
+    public RunController(RunRepositoryH2 runRepositoryProvided) {
+        this.runRepository = runRepositoryProvided;
     }
 
     @RequestMapping("/hello")
@@ -54,7 +62,8 @@ public class RunController {
     // @Valid is making sure data is validated. see Run.java for validation
     // example if empty title, will return response '400 Bad Request.. empty string'
     void addRun(@Valid @RequestBody Run run) {
-        runRepository.addRun(run);
+//        runRepository.addRun(run); // in memory db
+        runRepository.create(run); // h2 db
     }
 
     // this is PUT request
@@ -62,7 +71,8 @@ public class RunController {
     // returns status '204 No Content' so we know there's no content, update works
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void editRun(@RequestBody Run run, @PathVariable Integer id) {
-        runRepository.editRun(run, id);
+//        runRepository.editRun(run, id); // in memory db
+        runRepository.update(run, id); // h2 db
     }
 
     // this is DELETE request
@@ -70,6 +80,8 @@ public class RunController {
     // returns status '204 No Content' so we know there's no content, update works
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteRun(@PathVariable Integer id) {
-        runRepository.deleteRun(id);
+        runRepository.delete(id);
     }
+
+
 }
